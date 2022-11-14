@@ -1,11 +1,12 @@
-from flask import Flask
-from flask import request
+## prediction_flash.py
+from flask import Flask,request,jsonify
+import glob
 from joblib import load
 
 app = Flask(__name__)
-best_model = "svm_gamma=0.0005_C=7.joblib"
-model = load(best_model)
+best_model = load(glob.glob(".\models\svm_*.joblib")[0])
 
+@app.route("/predict",methods=['POST'])
 def predict():
     content = request.json
     img1 = content['image1']
@@ -22,3 +23,4 @@ def predict():
 
 if __name__ == "__main__":
     app.run(port=5000)
+	
