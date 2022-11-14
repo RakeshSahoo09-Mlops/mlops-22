@@ -25,9 +25,16 @@ def sum():
     x = request.json['x']
     y = request.json['y']
     z= x + y
-    return jsonify('y')
+    return jsonify({'sum': z})
 
 
-    return -1
+    #return -1
     # z = x + y
     # return z
+
+@app.route("/predict", methods=['POST'])
+def predict_digit():
+    image = request.json['image']
+    print("done loading")
+    predicted = model.predict([image])
+    return {"y_predicted":int(predicted[0])}
