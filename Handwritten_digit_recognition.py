@@ -36,6 +36,18 @@ digits = datasets.load_digits()
 print(f"\nGiven Image size : {digits.images.shape}")
 print("\n5 Confusion Matrix for respective splits:\n")
 
+
+import argparse
+# Initialize the Parser
+parser = argparse.ArgumentParser()
+# Adding Arguments
+parser.add_argument("--clf_name", help = "Classifier name")
+parser.add_argument("--random_state", help = "Set random state")  
+args = parser.parse_args()
+
+eed = int(args.random_state)
+model = args.clf_name
+
 ## Part 4: Data Pre-processing
 
 acc_df = pd.DataFrame()
