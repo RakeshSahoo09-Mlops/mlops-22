@@ -19,22 +19,23 @@ def hello_world():
 
 
 
-@app.route("/sum", methods=['POST'])
-def sum():
-    print(request.json)
-    x = request.json['x']
-    y = request.json['y']
-    z= x + y
-    return jsonify({'sum': z})
+app = Flask(__name__)
 
+@app.route("/predict",methods=['POST'])
+def predict():
+    content = request.json
+    img1 = content['image']
+    model = content['model_name']
+    
+    if model=="svm":
+        best_model = load("./svm_gamma=0.001_C=0.5.joblib")
+    elif model=="tree":
+        best_model = load("./tree_max_depth_8_Criterion_entropy")
 
-    #return -1
-    # z = x + y
-    # return z
+    predicted_digit = best_model.predict([img1])
+    
+    return jsonify({"predicted_digit":str(predicted_digit[0]),
+                    "model":model})
 
-@app.route("/predict", methods=['POST'])
-def predict_digit():
-    image = request.json['image']
-    print("done loading")
-    predicted = model.predict([image])
-    return {"y_predicted":int(predicted[0])}
+if __name__ == "_main_":
+    app.run(
