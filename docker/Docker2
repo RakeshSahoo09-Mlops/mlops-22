@@ -1,0 +1,28 @@
+## Dockerfile
+# start by pulling the python image
+FROM python:3.8.15-slim-buster
+
+RUN python3 -m pip install --upgrade pip
+
+COPY . /exp
+# copy the requirements file into the image
+COPY ./requirements.txt /exp/requirements.txt
+
+# switch working directory
+WORKDIR /exp
+
+# install the dependencies and packages in the requirements file
+# RUN pip3 install -r requirements.txt
+EXPOSE 5000
+
+RUN pip3 install --no-cache-dir -r /exp/requirements.txt
+# copy every content from the local file to the image
+COPY . /exp
+
+# configure the container to run in an executed manner
+# ENTRYPOINT [ python3 ]
+
+# CMD ["hello.py" ]
+
+
+CMD ["python3","./api/hello.py"]
