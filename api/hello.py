@@ -15,11 +15,6 @@ def hello_world():
     return "<p><i>Hello, World!</i></p>"
 
 
-# get x and y somehow
-#     - query parameter
-#     - get call / methods
-#     - post call / methods
-
 
 
 @app.route("/sum", methods=['POST'])
@@ -31,9 +26,6 @@ def sum():
     return jsonify({'sum': z})
 
 
-    #return -1
-    # z = x + y
-    # return z
 
 @app.route("/predict", methods=['POST'])
 def predict_digit():
